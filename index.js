@@ -1,7 +1,7 @@
 const WebSocket = require('ws');
 
 const wss = new WebSocket.Server({ port: 8080 });
-let state = ''
+let state
 
 wss.on('connection', (ws) => {
   // On client connection, send the current state

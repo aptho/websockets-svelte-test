@@ -1,49 +1,18 @@
 <script>
-	let textValue
-	let messages = ['text']
-	const ws = new WebSocket('ws://localhost:8080')
-
-	ws.onmessage = (message) => {
-		console.log(message.data)
-		messages.push(message.data)
-		messages = messages // forces rerender since array methods like push don't trigger updates
-	}
-
-	ws.onopen = () => {
-		console.log('open')
-	}
-
-	ws.onclose = () => {
-		console.log('close')
-	}
-
-	function handleClick(e) {
-		if (ws.readyState === WebSocket.OPEN && textValue) {
-			ws.send(textValue)
-			textValue = ''
-		}
-	}
+	import Editor from './components/Editor.svelte'
 </script>
 
 <main>
 	<h1>Websockets Test</h1>
-	<div class="text-area">
-		<textarea bind:value={textValue}></textarea>
-		<button on:click={handleClick}>Send</button>
+	<div class="editor-wrapper">
+		<Editor />
 	</div>
-
-	{#if messages}
-		{#each messages as message}
-			<div>{message}</div>
-		{/each}
-	{/if}
 </main>
 
 <style>
-	.text-area,.recieved {
+	.editor-wrapper {
 		display: flex;
-		flex-direction: column;
-		align-items: center;
+		justify-content: center;
 	}
 
 	main {
